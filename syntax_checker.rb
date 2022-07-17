@@ -15,15 +15,46 @@ class SyntaxChecker
 
   # Verifying given expression statisfying all the rules
   def self.verify(expression)
-    
+    if expression.match(/^[\[\]{}()<>]*$/)
+      return verify_brackets(expression)    
+    else
+      @@message = RULES[:rule_1]
+      return false
+    end
   end
 
   # Verifying brackets in the expression follow rule_2, rule_3 and rule_4
   def self.verify_brackets(expression)
+    stack = []
+    expression.chars.each do |bracket|
+      case bracket
+      when /[\[{(<]/ 
+        stack.push(bracket)
+      when /[\]})>]/
+        if BRACKET_MATCHER[stack.last] == bracket
+          stack.pop
+        elsif stack.empty?
+          @@message = RULES[:rule_2] % { bracket: bracket }
+          return false
+        else
+          @@message = RULES[:rule_3] % { bracket: bracket, last_opening_bracket: stack.last }
+          return false
+        end
+      end
+    end
+
+    unless stack.empty?
+      @@message = RULES[:rule_4] % { bracket: stack.last }
+      return false
+    else
+      @@message = ''
+      return true
+    end
   end
 
   # Displays message for the recent self.verify 
   def self.message
+    @@message
   end
 
   private_class_method :verify_brackets
