@@ -34,7 +34,6 @@ class SyntaxCheckerTest < Test::Unit::TestCase
         assert_equal(true, SyntaxChecker.verify("{}"))
         assert_equal(true, SyntaxChecker.verify("<>[]"))
 
-
         assert_equal(false, SyntaxChecker.verify("<]"))
         assert_equal(false, SyntaxChecker.verify("<>(){]"))
     end
