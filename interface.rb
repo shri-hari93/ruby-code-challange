@@ -3,7 +3,7 @@
 require "./syntax_checker"
 
 puts "Enter multiline expression ending with a 'exit'"
-expressions = gets("exit\n").gsub("exit\n", "").lines.map!(&:strip)
+expressions = gets("exit\n").gsub("exit\n", "").lines.map(&:strip)
 
 expressions.each do |expression| 
     puts "#{expression.empty? ? '""' : expression } is " \
