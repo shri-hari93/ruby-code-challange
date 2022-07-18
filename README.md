@@ -21,5 +21,3 @@ Enter multiline expression ending with a "exit"
 [(){}]
 exit
 ```
-
-> Note: Avoid giving empty expression just before exit.
